@@ -175,7 +175,7 @@ function tryGetLicenseFromReadme(dir) {
     var files = fs.readdirSync(dir);
     var readmePath = getFilePathStartsWith(dir, 'readme');
     var readme = fs.readFileSync(readmePath, "utf8");
-    var matches = readme.match(/(?:License\n-+|#+\s+License)\n*(?:`{3}|(?=\n?\ {4}))+\n*((?:.|\n(?!\ \[|\`{3}))*)/i);
+    var matches = readme.match(/(?:License\n-+|#+\s+License)\n*(?:`{3}|(?=\n?\ {4})|(?=.*License))+\n*((?:.|\n(?!\ \[|\`{3}|#+\s+\w+))*)/i);
     return matches != null ? matches[1] : null;
 }
 
