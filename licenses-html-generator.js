@@ -150,14 +150,12 @@ function getRepoDirFromUrl(url) {
 }
 
 function getLicenseFromPath(dir) {
-    var licenseFileString = readLicenseFile(dir);
-    var license = null;
-    if (licenseFileString != null && licenseFileString.match(/\s*Apache License/)) {
-        license = tryGetLicenseFromReadme(dir);
-    } else {
-        license = licenseFileString;
-    }
-    return license || licenseFileString;
+     var license = tryGetLicenseFromReadme(dir);
+     var licenseFileString = readLicenseFile(dir);
+     if (licenseFileString != null && licenseFileString.match(/\s*Apache License/)) {
+         return license || licenseFileString;
+     }
+    return licenseFileString || license;
 }
 
 function getFilePathStartsWith(dir, name) {
