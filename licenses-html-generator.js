@@ -79,18 +79,20 @@ var licensesHtmlGenerator = {
 
             var source = sourceList[i];
             console.log("Generating HTML for " + source.name);
-
+            var licenseType = getLicenseTypeFromSource(source);
             var licenseString = getLicenseStringFromSource(source);
 
-            if (licenseString == null) {
-                console.error("\nERROR:\nUnable to find license for " + source.name);
-                continue;
-            }
             if (i > 0) {
                 html += "\t<hr>\n";
             }
             html += "\t" + getLicenseHeader(source.name) + "\n";
-            html += '\t<div class="license">' + getHtmlForLicenseString(licenseString) + '\n</div>\n'
+            html += "\t" + '<p>License: ' + licenseType  + '</p>\n'
+            if (licenseString == null) {
+              console.error("\nERROR:\nUnable to find license for " + source.name);
+              html += '\t<div class="license">No license file was found.</div>\n'
+            } else {
+              html += '\t<div class="license">' + getHtmlForLicenseString(licenseString) + '\n</div>\n'
+            }
         }
 
         html += "</div>\n";
@@ -124,6 +126,24 @@ function readTemplateFile(name) {
     } catch (e) {
         return fs.readFileSync(path.join(__dirname, 'templates', name), 'utf8');
     }
+}
+
+function getLicenseTypeFromSource(source) {
+  if (!source.licenses) {
+    return "could not resolved";
+  }
+
+  if (typeof source.licenses === 'string') {
+    return source.licenses;
+  }
+
+  return source.licenses.reduce(function(prev, curr){
+    var c = ""
+    if (prev !== "") {
+      c += ", ";
+    }
+    return prev + c + curr;
+  }, "");
 }
 
 function getLicenseStringFromSource(source) {
