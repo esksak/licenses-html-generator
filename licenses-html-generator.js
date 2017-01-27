@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 var fs = require('fs');
 var path = require('path');
+var mkdirp = require('mkdirp');
 var child_process = require('child_process');
 
 var workingDir = process.argv[2];
@@ -43,8 +44,8 @@ var licensesHtmlGenerator = {
 
     generateHtml: function() {
 
-        child_process.execSync('mkdir -p ' + reposDir);
-        child_process.execSync('mkdir -p ' + outDir);
+        mkdirp(reposDir);
+        mkdirp(outDir);
 
         console.log("\nCloning repos...")
         for (var i = 0; i < sourceList.length; i++) {

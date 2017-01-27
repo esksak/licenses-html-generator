@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/stephentuso/licenses-html-generator/issues"
   },
-  "homepage": "https://github.com/stephentuso/licenses-html-generator#readme"
+  "homepage": "https://github.com/stephentuso/licenses-html-generator#readme",
+  "dependencies": {
+    "mkdirp": "^0.5.1"
+  }
 }
